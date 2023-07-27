@@ -2,7 +2,6 @@ import glob
 import re
 import pyvista as pv    #https://docs.pyvista.org/version/stable/user-guide/simple.html
 import numpy as np
-import matplotlib.pyplot as plt
 
 #make sure a dpm from a timestep is not
 #present in the next one
@@ -72,12 +71,3 @@ print('\nTotal points: ', dpm_diam_all.size)
 
 # save array to file
 np.savetxt('dpm_diam_all.txt', dpm_diam_all)
-
-#https://matplotlib.org/stable/gallery/statistics/hist.html
-#https://matplotlib.org/stable/gallery/statistics/histogram_cumulative.html#sphx-glr-gallery-statistics-histogram-cumulative-py
-fig, ax = plt.subplots(tight_layout=True)
-ax.hist(dpm_diam_all, bins=20)
-# ax.hist(dpm_diam_all, bins=10, cumulative=True, histtype='step')
-ax.set_xlabel('Droplet diameter (m)')
-ax.set_ylabel('Likelihood of occurrence')
-# ax.set_xscale('log')
