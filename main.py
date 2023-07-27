@@ -70,6 +70,9 @@ for fname in fnames:
 dpm_diam_all = np.hstack(dpm_diam_all)
 print('\nTotal points: ', dpm_diam_all.size)
 
+# save array to file
+np.savetxt('dpm_diam_all.txt', dpm_diam_all)
+
 #https://matplotlib.org/stable/gallery/statistics/hist.html
 #https://matplotlib.org/stable/gallery/statistics/histogram_cumulative.html#sphx-glr-gallery-statistics-histogram-cumulative-py
 fig, ax = plt.subplots(tight_layout=True)
