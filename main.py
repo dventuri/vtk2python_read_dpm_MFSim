@@ -72,3 +72,9 @@ print('\nTotal points: ', dpm_diam_all.size)
 
 #https://matplotlib.org/stable/gallery/statistics/hist.html
 #https://matplotlib.org/stable/gallery/statistics/histogram_cumulative.html#sphx-glr-gallery-statistics-histogram-cumulative-py
+fig, ax = plt.subplots(tight_layout=True)
+ax.hist(dpm_diam_all, bins=20)
+# ax.hist(dpm_diam_all, bins=10, cumulative=True, histtype='step')
+ax.set_xlabel('Droplet diameter (m)')
+ax.set_ylabel('Likelihood of occurrence')
+# ax.set_xscale('log')
