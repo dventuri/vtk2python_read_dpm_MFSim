@@ -45,6 +45,9 @@ for fname in fnames:
 
         # how many points are in this mesh
         print('Total points in file: ', dpm.n_points)
+        if(dpm.n_points < 1):
+            print("Skipping file")
+            continue
 
         # filter droplets outside the IB
         if (dpm.points.shape[0] != dpm.n_points):
