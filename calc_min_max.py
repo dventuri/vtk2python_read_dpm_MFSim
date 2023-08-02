@@ -12,6 +12,9 @@ base_fname = f"{base_dir}/dpm_*_000.vtp"
 timestep_treshold = 0
 n_procs = 120
 
+# define x cutoff
+x_cut = 0.1  #m
+
 ### function - sort numerically
 def numericalSort(value):
     numbers = re.compile(r'(\d+)')  #regex to match any repeating numerical Unicode character
@@ -61,11 +64,18 @@ for fname in fnames:
         if (dpm.points.shape[0] != dpm.n_points):
             raise ValueError("Wrong number of points for position point data")
 
-        r_pos = np.linalg.norm(dpm.points[:,1:] - 0.5, axis=1)
-        filter_arr = r_pos <= IB_radius
+        # filter droplets before x_cut
+        dpm_x = dpm.points[:,0]
+        filter_arr1 = dpm_x < x_cut
+        dpm_points_filtered = dpm.points[filter_arr1]
 
-        dpm_u_filtered = dpm_u[filter_arr]
+        r_pos = np.linalg.norm(dpm_points_filtered[:,1:] - 0.5, axis=1)
+        filter_arr2 = r_pos <= IB_radius
+
+        dpm_u_filtered = dpm_u[filter_arr1]
+        dpm_u_filtered = dpm_u_filtered[filter_arr2]
         print('Points after filtering: ', dpm_u_filtered.size)
+        if(dpm_u_filtered.size < 1): continue
 
         # get timestep max and min values
         tmp_max = np.max(dpm_u_filtered)
