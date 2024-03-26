@@ -7,12 +7,13 @@ import numpy as np
 #present in the next one
 
 # filenames
-base_dir = "/home/dventuri/run/canal_30m/output/dpm/pvtp/vtp"
+base_dir = "/home/dventuri/run/jmvedovoto/spraysingle/caso10/output/dpm/pvtp/vtp"
 base_fname = f"{base_dir}/dpm_*_*.vtp"
-timestep_treshold = 60000
+timestep_treshold = 20000
 
-# 'x' cutoff position
-x_cut = 29.9    # meters
+# geometric parameters
+x_cut = 0.0    # meters
+IB_radius = 10
 
 ### function - sort numerically
 def numericalSort(value):
@@ -36,38 +37,44 @@ for fname in fnames:
     # read vtp data
     dpm = pv.read(fname)
 
-    # cehck if x_max < x_cutoff
-    if (dpm.bounds[1] < x_cut): continue
-
     # print filename
     print('\nReading file ', fname)
 
-    # what are the mesh bounds?
-    print('Bounds: ', dpm.bounds)
+    # access a point data array inside de vtk
+    try:
+        dpm_diam = dpm.point_data['dpm_diameter']
+    except:
+        print('Empty file')
+        continue
+
+    # check for possible size error
+    if (dpm_diam.size != dpm.n_points):
+        raise ValueError("Wrong number of points for diameter point data")
+
+    if (dpm.points.shape[0] != dpm.n_points):
+        raise ValueError("Wrong number of points for position point data")
 
     # how many points are in this mesh
     print('Total points in file: ', dpm.n_points)
 
-    # access a point data array inside de vtk
-    dpm_diam = dpm.point_data['dpm_diameter']
-    if (dpm_diam.size != dpm.n_points):
-        raise ValueError("Wrong number of points for diameter point data")
-
-    # access dpm x position
+    # filter droplets before x_cut
     dpm_x = dpm.points[:,0]
-    if (dpm_x.size != dpm.n_points):
-        raise ValueError("Wrong number of points for position point data")
+    filter_arr1 = dpm_x > x_cut
+    dpm_points_filtered = dpm.points[filter_arr1]
 
-    # filter only values at (x > x_cutoff)
-    filter_arr = dpm_x > x_cut
-    dpm_diam_filtered = dpm_diam[filter_arr]
+    # filter droplets outside the IB
+    r_pos = np.linalg.norm(dpm_points_filtered[:,1:] - 0.5, axis=1)
+    filter_arr2 = r_pos <= IB_radius
+
+    # apply filters
+    dpm_diam_filtered = dpm_diam[filter_arr1]
+    dpm_diam_filtered = dpm_diam_filtered[filter_arr2]
     print('Points after filtering: ', dpm_diam_filtered.size)
     dpm_diam_all.append(dpm_diam_filtered)
-
 
 # consolidate complete vector
 dpm_diam_all = np.hstack(dpm_diam_all)
 print('\nTotal points: ', dpm_diam_all.size)
 
 # save array to file
-np.savetxt('dpm_diam_all.txt', dpm_diam_all)
+np.savetxt('dpm_diam_caso10.txt', dpm_diam_all)

@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-ts, dpm_count = np.loadtxt("./dpm_inside.txt",
+ts, dpm_count = np.loadtxt("./dpm_inside_caso10.txt",
                            dtype=float,
                            skiprows=0,
                            delimiter=' ',

@@ -7,10 +7,10 @@ import numpy as np
 #present in the next one
 
 # filenames
-base_dir = "/home/dventuri/run/mmvillar/canal30m_ewf/output/dpm/pvtp/vtp"
+base_dir = "/home/dventuri/run/jmvedovoto/spraysingle/caso10/output/dpm/pvtp/vtp"
 base_fname = f"{base_dir}/dpm_*_000.vtp"
 timestep_treshold = 0
-n_procs = 120
+n_procs = 64
 
 ### function - sort numerically
 def numericalSort(value):
@@ -62,5 +62,5 @@ for fname in fnames:
 
     ### save data
     print("Saving data")
-    with open('dpm_inside.txt','a') as f:
+    with open('dpm_inside_caso10.txt','a') as f:
         f.write(f"{fname[-15:-8]} {dpm_inside}\n")

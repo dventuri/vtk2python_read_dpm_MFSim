@@ -4,13 +4,15 @@ import pyvista as pv    #https://docs.pyvista.org/version/stable/user-guide/simp
 import numpy as np
 
 # filenames
-base_dir = "/home/dventuri/run/evap_shear_test/case01/output/dpm/pvtp/vtp"
+base_dir = "/home/dventuri/run/evap_shear_test/case07_rhocte/output/dpm/pvtp/vtp"
 base_fname = f"{base_dir}/dpm_*_000.vtp"
 timestep_treshold = 0
 n_procs = 8
 
 # physical properties
 dpm_rho = 980     #kg/m³
+# dpm_rho = 968.7291364     #kg/m³
+# dpm_rho = 958.6937524     #kg/m³
 
 ### function - sort numerically
 def numericalSort(value):
