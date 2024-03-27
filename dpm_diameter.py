@@ -4,7 +4,7 @@ import pyvista as pv    #https://docs.pyvista.org/version/stable/user-guide/simp
 import numpy as np
 
 # filenames
-base_dir = "//home/dventuri/run/evap_kurose/case01_1dpm/output/dpm/pvtp/vtp"
+base_dir = "/home/dventuri/run/evap_kurose/case01_1dpm/output/dpm/pvtp/vtp"
 base_fname = f"{base_dir}/dpm_*_000.vtp"
 timestep_treshold = 0
 n_procs = 8
