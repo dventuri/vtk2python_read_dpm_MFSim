@@ -41,6 +41,7 @@ for fname in fnames:
         # access a point data array inside de vtk
         try:
             dpm_diam = dpm.point_data['dpm_diameter']
+            dpm_T = dpm.point_data['dpm_temp']
         except:
             print('Empty file')
             continue
@@ -50,3 +51,5 @@ for fname in fnames:
     print("Saving data")
     with open('dpm_diameter_kurose.txt','a') as f:
         f.write(f"{time} {dpm_diam[0]}\n")
+    with open('dpm_temperature_kurose.txt','a') as f:
+        f.write(f"{time} {dpm_T[0]}\n")
