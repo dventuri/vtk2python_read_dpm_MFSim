@@ -109,3 +109,33 @@ fig.tight_layout(pad=0.01)
 plt.savefig('./repar40_mass.png',
             dpi=1200,
             format='png')
+
+
+
+xs1, dpm_mass1 = np.loadtxt("./canal_teste_dpms_medias.txt",
+                           dtype=float,
+                           skiprows=0,
+                           delimiter=' ',
+                           unpack=True)
+
+fig, ax = plt.subplots()
+ax.set_xlabel('Comprimento [m]')
+ax.set_ylabel('Fração de líquido [-]')
+ax.axis([0, 1, 0, 0.01])
+ax.xaxis.set_major_locator(plt.MultipleLocator(0.2))
+ax.xaxis.set_minor_locator(plt.MultipleLocator(0.1))
+ax.yaxis.set_major_locator(plt.MultipleLocator(0.001))
+ax.yaxis.set_minor_locator(plt.MultipleLocator(0.0005))
+ax.scatter(xs1, dpm_mass1/(1*0.1*0.1*2.3),
+           s=25,
+           c='white',
+           marker='o',
+           edgecolors='black',
+           linewidths=1,
+           label='Canal teste')
+ax.grid(color='gray',ls=':')
+ax.legend(loc='best')
+fig.tight_layout(pad=0.01)
+plt.savefig('./canal_teste_mass.png',
+            dpi=1200,
+            format='png')
